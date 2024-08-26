@@ -1,0 +1,40 @@
+services:
+  virtuoso:
+    container_name: virtuoso
+    image: openlink/virtuoso-opensource-7
+    networks:
+      - app-network
+    environment:
+      - DBA_PASSWORD=dba
+      - DAV_PASSWORD=dba
+      - VIRT_PARAMETERS_DIRSALLOWED=., ../vad, /usr/share/proj, /import
+    volumes:
+      - ${PWD}/datasets/yelpkg/data:/import
+      - ${PWD}/datasets/yelpkg/database:/database
+      - ${PWD}/datasets/yelpkg/database:/database
+      - ${PWD}/datasets/virtuoso_starter_script.sh:/app/start_script.sh
+
+  trainer:
+    container_name: trainer
+    image: cuda11:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.base
+    volumes:
+      - .:/app
+    networks:
+      - app-network
+    depends_on:
+      - virtuoso
+    command: tail -f /dev/null
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+networks:
+  app-network:
+    driver: bridge

@@ -1,0 +1,9 @@
+# Disallow. No need to copy data, results and so forth; we will use volumes instead.
+datasets/*
+results/*
+.venv/*
+Docker*
+docker*
+
+# Allow
+!datasets/feature_extractors/complex_requirements.txt
