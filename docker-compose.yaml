@@ -27,6 +27,7 @@ services:
     depends_on:
       - virtuoso
     command: tail -f /dev/null
+    ipc: host
     deploy:
       resources:
         reservations:
