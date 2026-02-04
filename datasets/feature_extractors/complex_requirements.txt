@@ -1,0 +1,7 @@
+# Must run as: SKLEARN_ALLOW_DEPRECATED_SKLEARN_PACKAGE_INSTALL=True pip install -r complex_requirements.txt
+
+-f https://download.pytorch.org/whl/torch_stable.html
+
+pykeen==1.8.1
+torch==1.10.0+cu111
+setuptools==69.5.1
